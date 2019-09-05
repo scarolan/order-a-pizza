@@ -126,16 +126,20 @@ data "dominos_menu_item" "drink1" {
 # }
 
 locals {
-  pizza1_list = tolist([
+  pizza1_list = [
     for item in range(var.pizza1_quantity) :
     data.dominos_menu_item.pizza1[*].matches[0].code
-  ])
+  ]
 }
 
-resource "dominos_order" "order" {
-  address_api_object = data.dominos_address.addr.api_object
-  item_codes         = local.pizza1_list
-  store_id           = data.dominos_store.store.store_id
+# resource "dominos_order" "order" {
+#   address_api_object = data.dominos_address.addr.api_object
+#   item_codes         = local.pizza1_list
+#   store_id           = data.dominos_store.store.store_id
+# }
+
+output "locals" {
+  value = pizza1_list
 }
 
 # output "pizza1" {
