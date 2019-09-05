@@ -50,14 +50,24 @@ variable "store_zip_code" {
   description = "store zip code"
 }
 
-variable "pizza_attributes" {
-  description = "attributes of the pizzas to order"
-  type        = list(list(string))
+variable "pizza1_attributes" {
+  description = "attributes of the first pizza to order"
+  type        = list(string)
 }
 
-variable "drink_attributes" {
-  description = "attributes of the drinks to order"
-  type        = list(list(string))
+variable "pizza1_quantity" {
+  description = "number of the first pizza to order"
+  type        = number
+}
+
+variable "drink1_attributes" {
+  description = "attributes of the first drink to order"
+  type        = list(string)
+}
+
+variable "drink1_quantity" {
+  description = "number of the first drink to order"
+  type        = number
 }
 
 provider "dominos" {
@@ -85,42 +95,64 @@ data "dominos_store" "store" {
   address_url_object = data.dominos_address.addr.url_object
 }
 
-data "dominos_menu_item" "pizzas" {
-  count        = length(var.pizza_attributes)
+data "dominos_menu_item" "pizza1" {
   store_id     = data.dominos_store.store.store_id
-  query_string = var.pizza_attributes[count.index]
+  query_string = var.pizza1_attributes
 }
 
-data "dominos_menu_item" "drinks" {
-  count        = length(var.drink_attributes)
+data "dominos_menu_item" "drink1" {
   store_id     = data.dominos_store.store.store_id
-  query_string = var.drink_attributes[count.index]
+  query_string = var.drink1_attributes
 }
+
+# data "dominos_menu_item" "pizza2" {
+#   store_id     = data.dominos_store.store.store_id
+#   query_string = var.pizza2_attributes
+# }
+
+# data "dominos_menu_item" "drink2" {
+#   store_id     = data.dominos_store.store.store_id
+#   query_string = var.drink2_attributes
+# }
+
+# data "dominos_menu_item" "pizza3" {
+#   store_id     = data.dominos_store.store.store_id
+#   query_string = var.pizza3_attributes
+# }
+
+# data "dominos_menu_item" "drink3" {
+#   store_id     = data.dominos_store.store.store_id
+#   query_string = var.drink3_attributes
+# }
 
 resource "dominos_order" "order" {
   address_api_object = data.dominos_address.addr.api_object
-  item_codes         = concat(data.dominos_menu_item.pizzas[*].matches[0].code, data.dominos_menu_item.drinks[*].matches[0].code)
+  item_codes         = [
+      for item in range(var.pizza1_quantity): data.dominos_menu_item.pizza1[*].matches[0].code
+  ]
   store_id           = data.dominos_store.store.store_id
 }
 
-output "pizzas" {
+output "pizza1" {
   value = [
-    for pizza in data.dominos_menu_item.pizzas:
+    for pizza in data.dominos_menu_item.pizza1:
       {
         name = pizza.matches[0].name
         code = pizza.matches[0].code
         price_cents = pizza.matches[0].price_cents
+        quantity = var.pizza1_quantity
       }
   ]
 }
 
-output "drinks" {
-  value = [
-    for drink in data.dominos_menu_item.drinks:
-      {
-        name = drink.matches[0].name
-        code = drink.matches[0].code
-        price_cents = drink.matches[0].price_cents
-      }
-  ]
-}
+# output "drinks" {
+#   value = [
+#     for drink in data.dominos_menu_item.drink1:
+#       {
+#         name = drink.matches[0].name
+#         code = drink.matches[0].code
+#         price_cents = drink.matches[0].price_cents
+#         quantity = var.drink1_quantity
+#       }
+#   ]
+# }
