@@ -126,15 +126,10 @@ data "dominos_menu_item" "drink1" {
 # }
 
 locals {
-  pizza1_list = tolist([
-    [ 
-      data.dominos_menu_item.pizza1[*].matches[0].code,
-      data.dominos_menu_item.pizza1[*].matches[0].code,
-      data.dominos_menu_item.pizza1[*].matches[0].code,
-      data.dominos_menu_item.pizza1[*].matches[0].code,
-      data.dominos_menu_item.pizza1[*].matches[0].code
-    ]
-  ])
+  pizza1_list = concat(
+    data.dominos_menu_item.pizza1[*].matches[0].code,
+    data.dominos_menu_item.pizza1[*].matches[0].code
+  )
 }
 
 resource "dominos_order" "order" {
