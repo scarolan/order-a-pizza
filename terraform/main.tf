@@ -70,6 +70,16 @@ variable "pizza2_quantity" {
   type        = number
 }
 
+variable "pizza3_attributes" {
+  description = "attributes of the third pizza to order"
+  type        = list(string)
+}
+
+variable "pizza3_quantity" {
+  description = "number of the third pizza to order"
+  type        = number
+}
+
 variable "drink_attributes" {
   description = "attributes of the drink to order"
   type        = list(string)
@@ -115,6 +125,11 @@ data "dominos_menu_item" "pizza2" {
   query_string = var.pizza2_attributes
 }
 
+data "dominos_menu_item" "pizza3" {
+  store_id     = data.dominos_store.store.store_id
+  query_string = var.pizza3_attributes
+}
+
 data "dominos_menu_item" "drink" {
   store_id     = data.dominos_store.store.store_id
   query_string = var.drink_attributes
@@ -128,6 +143,10 @@ locals {
   pizza2_list = flatten([
     for item in range(var.pizza2_quantity) :
     data.dominos_menu_item.pizza2[*].matches[0].code
+  ])
+  pizza3_list = flatten([
+    for item in range(var.pizza3_quantity) :
+    data.dominos_menu_item.pizza3[*].matches[0].code
   ])
   drink_list = flatten([
     for item in range(var.drink_quantity) :
@@ -161,6 +180,17 @@ resource "dominos_order" "order" {
 # output "pizza2" {
 #   value = [
 #     for pizza in data.dominos_menu_item.pizza2[*]:
+#       {
+#         name = pizza.matches[0].name
+#         code = pizza.matches[0].code
+#         price_cents = pizza.matches[0].price_cents
+#       }
+#   ]
+# }
+
+# output "pizza3" {
+#   value = [
+#     for pizza in data.dominos_menu_item.pizza3[*]:
 #       {
 #         name = pizza.matches[0].name
 #         code = pizza.matches[0].code
