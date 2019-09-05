@@ -60,13 +60,33 @@ variable "pizza1_quantity" {
   type        = number
 }
 
-variable "drink1_attributes" {
-  description = "attributes of the first drink to order"
+variable "pizza2_attributes" {
+  description = "attributes of the second pizza to order"
   type        = list(string)
 }
 
-variable "drink1_quantity" {
-  description = "number of the first drink to order"
+variable "pizza2_quantity" {
+  description = "number of the second pizza to order"
+  type        = number
+}
+
+variable "pizza3_attributes" {
+  description = "attributes of the third pizza to order"
+  type        = list(string)
+}
+
+variable "pizza3_quantity" {
+  description = "number of the third pizza to order"
+  type        = number
+}
+
+variable "drink_attributes" {
+  description = "attributes of the drink to order"
+  type        = list(string)
+}
+
+variable "drink_quantity" {
+  description = "number of the drink to order"
   type        = number
 }
 
@@ -100,35 +120,37 @@ data "dominos_menu_item" "pizza1" {
   query_string = var.pizza1_attributes
 }
 
-data "dominos_menu_item" "drink1" {
+data "dominos_menu_item" "pizza2" {
   store_id     = data.dominos_store.store.store_id
-  query_string = var.drink1_attributes
+  query_string = var.pizza2_attributes
 }
 
-# data "dominos_menu_item" "pizza2" {
-#   store_id     = data.dominos_store.store.store_id
-#   query_string = var.pizza2_attributes
-# }
+data "dominos_menu_item" "pizza3" {
+  store_id     = data.dominos_store.store.store_id
+  query_string = var.pizza3_attributes
+}
 
-# data "dominos_menu_item" "drink2" {
-#   store_id     = data.dominos_store.store.store_id
-#   query_string = var.drink2_attributes
-# }
-
-# data "dominos_menu_item" "pizza3" {
-#   store_id     = data.dominos_store.store.store_id
-#   query_string = var.pizza3_attributes
-# }
-
-# data "dominos_menu_item" "drink3" {
-#   store_id     = data.dominos_store.store.store_id
-#   query_string = var.drink3_attributes
-# }
+data "dominos_menu_item" "drink" {
+  store_id     = data.dominos_store.store.store_id
+  query_string = var.drink_attributes
+}
 
 locals {
   pizza1_list = flatten([
     for item in range(var.pizza1_quantity) :
     data.dominos_menu_item.pizza1[*].matches[0].code
+  ])
+  pizza2_list = flatten([
+    for item in range(var.pizza2_quantity) :
+    data.dominos_menu_item.pizza2[*].matches[0].code
+  ])
+  pizza3_list = flatten([
+    for item in range(var.pizza3_quantity) :
+    data.dominos_menu_item.pizza3[*].matches[0].code
+  ])
+  drink_list = flatten([
+    for item in range(var.drink_quantity) :
+    data.dominos_menu_item.drink[*].matches[0].code
   ])
 }
 
@@ -138,28 +160,46 @@ resource "dominos_order" "order" {
   store_id           = data.dominos_store.store.store_id
 }
 
-output "locals" {
-  value = local.pizza1_list
+output "pizza1" {
+  value = [
+    for pizza in data.dominos_menu_item.pizza1:
+      {
+        name = pizza.matches[0].name
+        code = pizza.matches[0].code
+        price_cents = pizza.matches[0].price_cents
+      }
+  ]
 }
 
-# output "pizza1" {
-#   value = [
-#     for pizza in data.dominos_menu_item.pizza1:
-#       {
-#         name = pizza.matches[0].name
-#         code = pizza.matches[0].code
-#         price_cents = pizza.matches[0].price_cents
-#       }
-#   ]
-# }
+output "pizza2" {
+  value = [
+    for pizza in data.dominos_menu_item.pizza2:
+      {
+        name = pizza.matches[0].name
+        code = pizza.matches[0].code
+        price_cents = pizza.matches[0].price_cents
+      }
+  ]
+}
 
-# output "drinks" {
-#   value = [
-#     for drink in data.dominos_menu_item.drink1:
-#       {
-#         name = drink.matches[0].name
-#         code = drink.matches[0].code
-#         price_cents = drink.matches[0].price_cents
-#       }
-#   ]
-# }
+output "pizza3" {
+  value = [
+    for pizza in data.dominos_menu_item.pizza3:
+      {
+        name = pizza.matches[0].name
+        code = pizza.matches[0].code
+        price_cents = pizza.matches[0].price_cents
+      }
+  ]
+}
+
+output "drinks" {
+  value = [
+    for drink in data.dominos_menu_item.drink:
+      {
+        name = drink.matches[0].name
+        code = drink.matches[0].code
+        price_cents = drink.matches[0].price_cents
+      }
+  ]
+}
