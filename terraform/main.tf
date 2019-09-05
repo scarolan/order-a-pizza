@@ -132,11 +132,11 @@ locals {
   ]
 }
 
-# resource "dominos_order" "order" {
-#   address_api_object = data.dominos_address.addr.api_object
-#   item_codes         = local.pizza1_list
-#   store_id           = data.dominos_store.store.store_id
-# }
+resource "dominos_order" "order" {
+  address_api_object = data.dominos_address.addr.api_object
+  item_codes         = local.pizza1_list
+  store_id           = data.dominos_store.store.store_id
+}
 
 output "locals" {
   value = local.pizza1_list
