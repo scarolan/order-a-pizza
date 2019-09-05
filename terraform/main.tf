@@ -168,14 +168,12 @@ resource "dominos_order" "order" {
 }
 
 output "pizza1" {
-  value = [
-    for pizza in data.dominos_menu_item.pizza1[*]:
-      {
-        name = pizza.matches[0].name
-        code = pizza.matches[0].code
-        price_cents = pizza.matches[0].price_cents
-      }
-  ]
+  value = { 
+    name = data.dominos_menu_item.pizza1[*].matches[0].name
+    code = data.dominos_menu_item.pizza1[*].matches[0].code
+    price_cents = data.dominos_menu_item.pizza1[*].matches[0].price_cents 
+    quantity = var.pizza1_quantity
+  }
 }
 
 # output "pizza2" {
