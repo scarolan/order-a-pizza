@@ -125,12 +125,16 @@ data "dominos_menu_item" "drink1" {
 #   query_string = var.drink3_attributes
 # }
 
+locals {
+  pizza1_list = tolist([
+    for item in range(var.pizza1_quantity) :
+    data.dominos_menu_item.pizza1[*].matches[0].code
+  ])
+}
+
 resource "dominos_order" "order" {
   address_api_object = data.dominos_address.addr.api_object
-  item_codes         = concat(
-    data.dominos_menu_item.pizza1[*].matches[0].code,
-    data.dominos_menu_item.pizza1[*].matches[0].code
-  )
+  item_codes         = local.pizza1_list
   store_id           = data.dominos_store.store.store_id
 }
 
