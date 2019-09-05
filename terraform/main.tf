@@ -129,7 +129,7 @@ resource "dominos_order" "order" {
   address_api_object = data.dominos_address.addr.api_object
   item_codes         = toset([
       for item in range(var.pizza1_quantity) : 
-      concat(data.dominos_menu_item.pizza1[*].matches[0].code)
+      data.dominos_menu_item.pizza1[*].matches[0].code
   ])
   store_id           = data.dominos_store.store.store_id
 }
