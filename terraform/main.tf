@@ -138,6 +138,7 @@ data "dominos_menu_item" "drink" {
 locals {
   pizza1_list = data.dominos_menu_item.pizza1[*].matches[0].code
   pizza2_list = data.dominos_menu_item.pizza2[*].matches[0].code
+  drink_list = data.dominos_menu_item.drink[*].matches[0].code
 }
 
 resource "dominos_order" "order" {
