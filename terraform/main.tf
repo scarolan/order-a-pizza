@@ -127,12 +127,9 @@ data "dominos_menu_item" "drink1" {
 
 resource "dominos_order" "order" {
   address_api_object = data.dominos_address.addr.api_object
-  item_codes         = tolist(
+  item_codes         = concat(
     data.dominos_menu_item.pizza1[*].matches[0].code,
-    data.dominos_menu_item.pizza1[*].matches[0].code,
-    data.dominos_menu_item.pizza1[*].matches[0].code
-    #"P14IREUH", "P14IREUH", "P14IREUH" 
-  )
+    data.dominos_menu_item.pizza1[*].matches[0].code)
   store_id           = data.dominos_store.store.store_id
 }
 
