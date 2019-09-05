@@ -193,35 +193,11 @@ output "pizza3" {
   }
 }
 
-# output "pizza2" {
-#   value = [
-#     for pizza in data.dominos_menu_item.pizza2[*]:
-#       {
-#         name = pizza.matches[0].name
-#         code = pizza.matches[0].code
-#         price_cents = pizza.matches[0].price_cents
-#       }
-#   ]
-# }
-
-# output "pizza3" {
-#   value = [
-#     for pizza in data.dominos_menu_item.pizza3[*]:
-#       {
-#         name = pizza.matches[0].name
-#         code = pizza.matches[0].code
-#         price_cents = pizza.matches[0].price_cents
-#       }
-#   ]
-# }
-
-# output "drinks" {
-#   value = [
-#     for drink in data.dominos_menu_item.drink:
-#       {
-#         name = drink.matches[0].name
-#         code = drink.matches[0].code
-#         price_cents = drink.matches[0].price_cents
-#       }
-#   ]
-# }
+output "drinks" {
+  value = {
+    name        = data.dominos_menu_item.drink[*].matches[0].name
+    code        = data.dominos_menu_item.drink[*].matches[0].code
+    price_cents = data.dominos_menu_item.drink[*].matches[0].price_cents
+    quantity    = var.drink_quantity
+  }
+}
