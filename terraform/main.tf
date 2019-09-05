@@ -142,26 +142,24 @@ output "locals" {
   value = local.pizza1_list
 }
 
-# output "pizza1" {
-#   value = [
-#     for pizza in data.dominos_menu_item.pizza1:
-#       {
-#         name = pizza.matches[0].name
-#         code = pizza.matches[0].code
-#         price_cents = pizza.matches[0].price_cents
-#         quantity = var.pizza1_quantity
-#       }
-#   ]
-# }
+output "pizza1" {
+  value = [
+    for pizza in data.dominos_menu_item.pizza1:
+      {
+        name = pizza.matches[0].name
+        code = pizza.matches[0].code
+        price_cents = pizza.matches[0].price_cents
+      }
+  ]
+}
 
-# output "drinks" {
-#   value = [
-#     for drink in data.dominos_menu_item.drink1:
-#       {
-#         name = drink.matches[0].name
-#         code = drink.matches[0].code
-#         price_cents = drink.matches[0].price_cents
-#         quantity = var.drink1_quantity
-#       }
-#   ]
-# }
+output "drinks" {
+  value = [
+    for drink in data.dominos_menu_item.drink1:
+      {
+        name = drink.matches[0].name
+        code = drink.matches[0].code
+        price_cents = drink.matches[0].price_cents
+      }
+  ]
+}
