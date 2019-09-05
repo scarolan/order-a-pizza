@@ -120,26 +120,26 @@ data "dominos_menu_item" "drink" {
   query_string = var.drink_attributes
 }
 
-# locals {
-#   pizza1_list = flatten([
-#     for item in range(var.pizza1_quantity) :
-#     data.dominos_menu_item.pizza1[*].matches[0].code
-#   ])
-#   pizza2_list = flatten([
-#     for item in range(var.pizza2_quantity) :
-#     data.dominos_menu_item.pizza2[*].matches[0].code
-#   ])
-#   drink_list = flatten([
-#     for item in range(var.drink_quantity) :
-#     data.dominos_menu_item.drink[*].matches[0].code
-#   ])
-# }
-
 locals {
-  pizza1_list = data.dominos_menu_item.pizza1[*].matches[0].code
-  pizza2_list = data.dominos_menu_item.pizza2[*].matches[0].code
-  drink_list = data.dominos_menu_item.drink[*].matches[0].code
+  pizza1_list = flatten([
+    for item in range(var.pizza1_quantity) :
+    data.dominos_menu_item.pizza1[*].matches[0].code
+  ])
+  pizza2_list = flatten([
+    for item in range(var.pizza2_quantity) :
+    data.dominos_menu_item.pizza2[*].matches[0].code
+  ])
+  drink_list = flatten([
+    for item in range(var.drink_quantity) :
+    data.dominos_menu_item.drink[*].matches[0].code
+  ])
 }
+
+# locals {
+#   pizza1_list = data.dominos_menu_item.pizza1[*].matches[0].code
+#   pizza2_list = data.dominos_menu_item.pizza2[*].matches[0].code
+#   drink_list = data.dominos_menu_item.drink[*].matches[0].code
+# }
 
 resource "dominos_order" "order" {
   address_api_object = data.dominos_address.addr.api_object
