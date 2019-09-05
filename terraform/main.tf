@@ -162,7 +162,7 @@ resource "dominos_order" "order" {
 
 output "pizza1" {
   value = [
-    for pizza in data.dominos_menu_item.pizza1:
+    for pizza in data.dominos_menu_item.pizza1[*]:
       {
         name = pizza.matches[0].name
         code = pizza.matches[0].code
@@ -173,7 +173,7 @@ output "pizza1" {
 
 output "pizza2" {
   value = [
-    for pizza in data.dominos_menu_item.pizza2:
+    for pizza in data.dominos_menu_item.pizza2[*]:
       {
         name = pizza.matches[0].name
         code = pizza.matches[0].code
@@ -184,7 +184,7 @@ output "pizza2" {
 
 output "pizza3" {
   value = [
-    for pizza in data.dominos_menu_item.pizza3:
+    for pizza in data.dominos_menu_item.pizza3[*]:
       {
         name = pizza.matches[0].name
         code = pizza.matches[0].code
