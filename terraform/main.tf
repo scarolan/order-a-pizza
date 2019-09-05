@@ -120,15 +120,15 @@ data "dominos_menu_item" "pizza1" {
   query_string = var.pizza1_attributes
 }
 
-data "dominos_menu_item" "pizza2" {
-  store_id     = data.dominos_store.store.store_id
-  query_string = var.pizza2_attributes
-}
+# data "dominos_menu_item" "pizza2" {
+#   store_id     = data.dominos_store.store.store_id
+#   query_string = var.pizza2_attributes
+# }
 
-data "dominos_menu_item" "pizza3" {
-  store_id     = data.dominos_store.store.store_id
-  query_string = var.pizza3_attributes
-}
+# data "dominos_menu_item" "pizza3" {
+#   store_id     = data.dominos_store.store.store_id
+#   query_string = var.pizza3_attributes
+# }
 
 data "dominos_menu_item" "drink" {
   store_id     = data.dominos_store.store.store_id
@@ -140,14 +140,14 @@ locals {
     for item in range(var.pizza1_quantity) :
     data.dominos_menu_item.pizza1[*].matches[0].code
   ])
-  pizza2_list = flatten([
-    for item in range(var.pizza2_quantity) :
-    data.dominos_menu_item.pizza2[*].matches[0].code
-  ])
-  pizza3_list = flatten([
-    for item in range(var.pizza3_quantity) :
-    data.dominos_menu_item.pizza3[*].matches[0].code
-  ])
+  # pizza2_list = flatten([
+  #   for item in range(var.pizza2_quantity) :
+  #   data.dominos_menu_item.pizza2[*].matches[0].code
+  # ])
+  # pizza3_list = flatten([
+  #   for item in range(var.pizza3_quantity) :
+  #   data.dominos_menu_item.pizza3[*].matches[0].code
+  # ])
   drink_list = flatten([
     for item in range(var.drink_quantity) :
     data.dominos_menu_item.drink[*].matches[0].code
@@ -162,7 +162,8 @@ locals {
 
 resource "dominos_order" "order" {
   address_api_object = data.dominos_address.addr.api_object
-  item_codes         = flatten([local.pizza1_list, local.pizza2_list, local.drink_list])
+  #item_codes         = flatten([local.pizza1_list, local.pizza2_list, local.pizza3_list, local.drink_list])
+  item_codes         = flatten([local.pizza1_list, local.drink_list])
   store_id           = data.dominos_store.store.store_id
 }
 
