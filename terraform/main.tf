@@ -156,50 +156,50 @@ locals {
 
 resource "dominos_order" "order" {
   address_api_object = data.dominos_address.addr.api_object
-  item_codes         = concat(local.pizza1_list, local.pizza2_list, local.pizza3_list, local.drink_list)
+  item_codes         = flatten(local.pizza1_list, local.pizza2_list, local.pizza3_list, local.drink_list)
   store_id           = data.dominos_store.store.store_id
 }
 
-output "pizza1" {
-  value = [
-    for pizza in data.dominos_menu_item.pizza1[*]:
-      {
-        name = pizza.matches[0].name
-        code = pizza.matches[0].code
-        price_cents = pizza.matches[0].price_cents
-      }
-  ]
-}
+# output "pizza1" {
+#   value = [
+#     for pizza in data.dominos_menu_item.pizza1[*]:
+#       {
+#         name = pizza.matches[0].name
+#         code = pizza.matches[0].code
+#         price_cents = pizza.matches[0].price_cents
+#       }
+#   ]
+# }
 
-output "pizza2" {
-  value = [
-    for pizza in data.dominos_menu_item.pizza2[*]:
-      {
-        name = pizza.matches[0].name
-        code = pizza.matches[0].code
-        price_cents = pizza.matches[0].price_cents
-      }
-  ]
-}
+# output "pizza2" {
+#   value = [
+#     for pizza in data.dominos_menu_item.pizza2[*]:
+#       {
+#         name = pizza.matches[0].name
+#         code = pizza.matches[0].code
+#         price_cents = pizza.matches[0].price_cents
+#       }
+#   ]
+# }
 
-output "pizza3" {
-  value = [
-    for pizza in data.dominos_menu_item.pizza3[*]:
-      {
-        name = pizza.matches[0].name
-        code = pizza.matches[0].code
-        price_cents = pizza.matches[0].price_cents
-      }
-  ]
-}
+# output "pizza3" {
+#   value = [
+#     for pizza in data.dominos_menu_item.pizza3[*]:
+#       {
+#         name = pizza.matches[0].name
+#         code = pizza.matches[0].code
+#         price_cents = pizza.matches[0].price_cents
+#       }
+#   ]
+# }
 
-output "drinks" {
-  value = [
-    for drink in data.dominos_menu_item.drink:
-      {
-        name = drink.matches[0].name
-        code = drink.matches[0].code
-        price_cents = drink.matches[0].price_cents
-      }
-  ]
-}
+# output "drinks" {
+#   value = [
+#     for drink in data.dominos_menu_item.drink:
+#       {
+#         name = drink.matches[0].name
+#         code = drink.matches[0].code
+#         price_cents = drink.matches[0].price_cents
+#       }
+#   ]
+# }
