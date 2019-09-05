@@ -156,7 +156,8 @@ locals {
 
 resource "dominos_order" "order" {
   address_api_object = data.dominos_address.addr.api_object
-  item_codes         = flatten([local.pizza1_list, local.pizza2_list, local.pizza3_list, local.drink_list])
+  #item_codes         = flatten([local.pizza1_list, local.pizza2_list, local.pizza3_list, local.drink_list])
+  item_codes         = flatten([local.pizza1_list, local.drink_list])
   store_id           = data.dominos_store.store.store_id
 }
 
