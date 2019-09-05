@@ -133,17 +133,17 @@ resource "dominos_order" "order" {
   store_id           = data.dominos_store.store.store_id
 }
 
-output "pizza1" {
-  value = [
-    for pizza in data.dominos_menu_item.pizza1:
-      {
-        name = pizza.matches[0].name
-        code = pizza.matches[0].code
-        price_cents = pizza.matches[0].price_cents
-        quantity = var.pizza1_quantity
-      }
-  ]
-}
+# output "pizza1" {
+#   value = [
+#     for pizza in data.dominos_menu_item.pizza1:
+#       {
+#         name = pizza.matches[0].name
+#         code = pizza.matches[0].code
+#         price_cents = pizza.matches[0].price_cents
+#         quantity = var.pizza1_quantity
+#       }
+#   ]
+# }
 
 # output "drinks" {
 #   value = [
