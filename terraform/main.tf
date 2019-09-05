@@ -163,17 +163,6 @@ resource "dominos_order" "order" {
 #   ]
 # }
 
-# output "pizza3" {
-#   value = [
-#     for pizza in data.dominos_menu_item.pizza3[*]:
-#       {
-#         name = pizza.matches[0].name
-#         code = pizza.matches[0].code
-#         price_cents = pizza.matches[0].price_cents
-#       }
-#   ]
-# }
-
 # output "drinks" {
 #   value = [
 #     for drink in data.dominos_menu_item.drink:
