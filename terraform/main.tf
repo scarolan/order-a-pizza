@@ -139,7 +139,7 @@ locals {
 # }
 
 output "locals" {
-  value = pizza1_list
+  value = local.pizza1_list
 }
 
 # output "pizza1" {
