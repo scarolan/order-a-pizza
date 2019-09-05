@@ -127,8 +127,12 @@ data "dominos_menu_item" "drink1" {
 
 locals {
   pizza1_list = tolist([
-    for item in range(var.pizza1_quantity) :
-    data.dominos_menu_item.pizza1[*].matches[0].code
+    [ 
+      data.dominos_menu_item.pizza1[*].matches[0].code,
+      data.dominos_menu_item.pizza1[*].matches[0].code,
+      data.dominos_menu_item.pizza1[*].matches[0].code,
+      data.dominos_menu_item.pizza1[*].matches[0].code,
+      data.dominos_menu_item.pizza1[*].matches[0].code,
   ])
 }
 
