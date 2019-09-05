@@ -115,11 +115,6 @@ data "dominos_menu_item" "pizza2" {
   query_string = var.pizza2_attributes
 }
 
-# data "dominos_menu_item" "pizza3" {
-#   store_id     = data.dominos_store.store.store_id
-#   query_string = var.pizza3_attributes
-# }
-
 data "dominos_menu_item" "drink" {
   store_id     = data.dominos_store.store.store_id
   query_string = var.drink_attributes
@@ -134,10 +129,6 @@ locals {
     for item in range(var.pizza2_quantity) :
     data.dominos_menu_item.pizza2[*].matches[0].code
   ])
-  # pizza3_list = flatten([
-  #   for item in range(var.pizza3_quantity) :
-  #   data.dominos_menu_item.pizza3[*].matches[0].code
-  # ])
   drink_list = flatten([
     for item in range(var.drink_quantity) :
     data.dominos_menu_item.drink[*].matches[0].code
