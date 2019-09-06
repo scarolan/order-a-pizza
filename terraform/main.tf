@@ -60,25 +60,25 @@ variable "pizza1_quantity" {
   type        = number
 }
 
-variable "pizza2_attributes" {
-  description = "attributes of the second pizza to order"
-  type        = list(string)
-}
+# variable "pizza2_attributes" {
+#   description = "attributes of the second pizza to order"
+#   type        = list(string)
+# }
 
-variable "pizza2_quantity" {
-  description = "number of the second pizza to order"
-  type        = number
-}
+# variable "pizza2_quantity" {
+#   description = "number of the second pizza to order"
+#   type        = number
+# }
 
-variable "pizza3_attributes" {
-  description = "attributes of the third pizza to order"
-  type        = list(string)
-}
+# variable "pizza3_attributes" {
+#   description = "attributes of the third pizza to order"
+#   type        = list(string)
+# }
 
-variable "pizza3_quantity" {
-  description = "number of the third pizza to order"
-  type        = number
-}
+# variable "pizza3_quantity" {
+#   description = "number of the third pizza to order"
+#   type        = number
+# }
 
 variable "drink_attributes" {
   description = "attributes of the drink to order"
