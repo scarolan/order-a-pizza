@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 0.12.0"
+  required_version = ">= 0.15.1"
 }
 
 variable "first_name" {
@@ -154,11 +154,11 @@ locals {
   ])
 }
 
-# locals {
-#   pizza1_list = data.dominos_menu_item.pizza1[*].matches[0].code
-#   pizza2_list = data.dominos_menu_item.pizza2[*].matches[0].code
-#   drink_list = data.dominos_menu_item.drink[*].matches[0].code
-# }
+locals {
+  pizza1_list = data.dominos_menu_item.pizza1[*].matches[0].code
+  pizza2_list = data.dominos_menu_item.pizza2[*].matches[0].code
+  drink_list = data.dominos_menu_item.drink[*].matches[0].code
+}
 
 resource "dominos_order" "order" {
   address_api_object = data.dominos_address.addr.api_object
@@ -167,14 +167,14 @@ resource "dominos_order" "order" {
   store_id           = data.dominos_store.store.store_id
 }
 
-# output "pizza1" {
-#   value = {
-#     name        = data.dominos_menu_item.pizza1[*].matches[0].name
-#     code        = data.dominos_menu_item.pizza1[*].matches[0].code
-#     price_cents = data.dominos_menu_item.pizza1[*].matches[0].price_cents
-#     quantity    = var.pizza1_quantity
-#   }
-# }
+output "pizza1" {
+  value = {
+    name        = data.dominos_menu_item.pizza1[*].matches[0].name
+    code        = data.dominos_menu_item.pizza1[*].matches[0].code
+    price_cents = data.dominos_menu_item.pizza1[*].matches[0].price_cents
+    quantity    = var.pizza1_quantity
+  }
+}
 
 # output "pizza2" {
 #   value = {
@@ -194,11 +194,11 @@ resource "dominos_order" "order" {
 #   }
 # }
 
-# output "drinks" {
-#   value = {
-#     name        = data.dominos_menu_item.drink[*].matches[0].name
-#     code        = data.dominos_menu_item.drink[*].matches[0].code
-#     price_cents = data.dominos_menu_item.drink[*].matches[0].price_cents
-#     quantity    = var.drink_quantity
-#   }
-# }
+output "drinks" {
+  value = {
+    name        = data.dominos_menu_item.drink[*].matches[0].name
+    code        = data.dominos_menu_item.drink[*].matches[0].code
+    price_cents = data.dominos_menu_item.drink[*].matches[0].price_cents
+    quantity    = var.drink_quantity
+  }
+}
