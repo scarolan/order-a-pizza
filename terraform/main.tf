@@ -167,14 +167,14 @@ resource "dominos_order" "order" {
   store_id           = data.dominos_store.store.store_id
 }
 
-output "pizza1" {
-  value = {
-    name        = data.dominos_menu_item.pizza1[*].matches[0].name
-    code        = data.dominos_menu_item.pizza1[*].matches[0].code
-    price_cents = data.dominos_menu_item.pizza1[*].matches[0].price_cents
-    quantity    = var.pizza1_quantity
-  }
-}
+# output "pizza1" {
+#   value = {
+#     name        = data.dominos_menu_item.pizza1[*].matches[0].name
+#     code        = data.dominos_menu_item.pizza1[*].matches[0].code
+#     price_cents = data.dominos_menu_item.pizza1[*].matches[0].price_cents
+#     quantity    = var.pizza1_quantity
+#   }
+# }
 
 # output "pizza2" {
 #   value = {
@@ -194,11 +194,11 @@ output "pizza1" {
 #   }
 # }
 
-output "drinks" {
-  value = {
-    name        = data.dominos_menu_item.drink[*].matches[0].name
-    code        = data.dominos_menu_item.drink[*].matches[0].code
-    price_cents = data.dominos_menu_item.drink[*].matches[0].price_cents
-    quantity    = var.drink_quantity
-  }
-}
+# output "drinks" {
+#   value = {
+#     name        = data.dominos_menu_item.drink[*].matches[0].name
+#     code        = data.dominos_menu_item.drink[*].matches[0].code
+#     price_cents = data.dominos_menu_item.drink[*].matches[0].price_cents
+#     quantity    = var.drink_quantity
+#   }
+# }
